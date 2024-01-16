@@ -52,17 +52,17 @@ We can then call to decode the integrity token:
 
 ```typescript
 const res = await fetch(
-			`https://playintegrity.googleapis.com/v1/${env.PACKAGE_NAME}:decodeIntegrityToken`,
-			{
-				method: 'POST',
-				headers: {
-					'Authorization': `Bearer ${accessToken}`,
-					'Content-Type': `application/json`
-				},
-				body: JSON.stringify({ integrity_token: integrityToken })
-			}
-		);
-		const response = await res.json();
+    `https://playintegrity.googleapis.com/v1/${env.PACKAGE_NAME}:decodeIntegrityToken`,
+    {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': `application/json`
+        },
+        body: JSON.stringify({ integrity_token: integrityToken })
+    }
+);
+const response = await res.json();
 ```
 
 In the above code `integrityToken` is a variable passed in from the mobile application. The response gives us the verict of whether the mobile application client looks legitimate.
