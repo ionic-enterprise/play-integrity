@@ -8,16 +8,23 @@ export interface Env {
 
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+		if (request.method != 'POST') {
+			return new Response("", { status: 404 });
+		}
 		return await validateIntegrityToken(request, env);
 	},
 };
 
 async function validateIntegrityToken(request: Request, env: Env): Promise<Response> {
 	// Make sure the request has includes the integrity token sent from the mobile app
-	const body: any = await request.json();
-	const integrityToken = body.token;
-	if (!integrityToken) {
-		throw new Error(`integrity token is missing`);
+	try {
+		const body: any = await request.json();
+		const integrityToken = body.token;
+		if (!integrityToken) {
+			return new Response("", { status: 404 });
+		}
+	} catch {
+		return new Response("", { status: 404 });
 	}
 
 	try {
